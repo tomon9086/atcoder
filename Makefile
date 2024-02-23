@@ -14,6 +14,13 @@ PROBLEM_NUMBER := $(q)
 # テンプレートファイル名の設定
 TEMPLATE_HELLO_WORLD := _templates/cpp/helloworld.cpp
 
+# テストファイルディレクトリの設定
+TESTS_DIR := _tests
+PROBLEM_TEST_DIR=$(TESTS_DIR)/$(CONTEST_ID)/$(PROBLEM_NUMBER)
+MAX_TEST_NUMBER := $(shell ls -1 $(PROBLEM_TEST_DIR)/*.txt | awk -F/ '{print $$NF}' | awk -F. '{print $$1}' | sort -n | tail -n 1)
+NEXT_TEST_NUMBER := $(shell echo $$(($(MAX_TEST_NUMBER) + 1)))
+PROBLEM_TEST_FILES := $(wildcard $(PROBLEM_TEST_DIR)/*.txt)
+
 # ファイル名の設定
 SRC := $(CONTEST_ID)/$(PROBLEM_NUMBER).cpp
 OUT := $(CONTEST_ID)/$(PROBLEM_NUMBER).out
@@ -40,6 +47,13 @@ new: check_vars
 	mkdir -p $(CONTEST_ID)
 	cp $(TEMPLATE_HELLO_WORLD) $(SRC)
 
+# テストファイルを作成するルール
+.PHONY: test_new
+test_new: check_vars
+	mkdir -p $(PROBLEM_TEST_DIR)
+	touch $(PROBLEM_TEST_DIR)/$(NEXT_TEST_NUMBER).txt
+	@echo "Created file $(NEXT_TEST_NUMBER).txt"
+
 # a.outを作成するルール
 $(OUT): $(SRC)
 	$(CXX) $(CXXFLAGS) $< -o $@
@@ -48,6 +62,15 @@ $(OUT): $(SRC)
 .PHONY: run
 run: $(OUT)
 	./$(OUT)
+
+# 全テストファイルを実行するルール
+.PHONY: test
+test: check_vars $(OUT) $(PROBLEM_TEST_FILES:%.txt=%_run)
+
+# 各テストファイルを実行するルール
+$(PROBLEM_TEST_DIR)/%_run: $(PROBLEM_TEST_DIR)/%.txt
+	@echo "Running $<:"
+	@./$(OUT) <$<
 
 # cleanターゲットを作成
 .PHONY: clean
