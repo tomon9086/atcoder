@@ -11,6 +11,9 @@ CXXFLAGS := -std=c++11 -Wall -Wextra
 CONTEST_ID := $(c)
 PROBLEM_NUMBER := $(q)
 
+# テンプレートファイル名の設定
+TEMPLATE_HELLO_WORLD := _templates/cpp/helloworld.cpp
+
 # ファイル名の設定
 SRC := $(CONTEST_ID)/$(PROBLEM_NUMBER).cpp
 OUT := $(CONTEST_ID)/$(PROBLEM_NUMBER).out
@@ -30,6 +33,12 @@ check_vars:
 		echo "ERROR: q is not defined. Please specify the file name."; \
 		exit 1; \
 	fi
+
+# ファイルを作成するルール
+.PHONY: new
+new: check_vars
+	mkdir -p $(CONTEST_ID)
+	cp $(TEMPLATE_HELLO_WORLD) $(SRC)
 
 # a.outを作成するルール
 $(OUT): $(SRC)
