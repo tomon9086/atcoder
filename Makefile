@@ -17,7 +17,7 @@ TEMPLATE_HELLO_WORLD := _templates/cpp/helloworld.cpp
 # テストファイルディレクトリの設定
 TESTS_DIR := _tests
 PROBLEM_TEST_DIR=$(TESTS_DIR)/$(CONTEST_ID)/$(PROBLEM_NUMBER)
-MAX_TEST_NUMBER := $(shell ls -1 $(PROBLEM_TEST_DIR)/*.txt | awk -F/ '{print $$NF}' | awk -F. '{print $$1}' | sort -n | tail -n 1)
+MAX_TEST_NUMBER := $(shell ls -1 $(PROBLEM_TEST_DIR)/*.txt 2>/dev/null | awk -F/ '{print $$NF}' | awk -F. '{print $$1}' | sort -n | tail -n 1)
 NEXT_TEST_NUMBER := $(shell echo $$(($(MAX_TEST_NUMBER) + 1)))
 PROBLEM_TEST_FILES := $(wildcard $(PROBLEM_TEST_DIR)/*.txt)
 
