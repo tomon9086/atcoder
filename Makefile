@@ -5,7 +5,7 @@
 CXX := clang++
 
 # コンパイルオプションの設定
-CXXFLAGS := -std=c++11 -Wall -Wextra
+CXXFLAGS := -std=c++11 -Wall -Wextra -I_lib/cpp
 
 # 変数
 CONTEST_ID := $(c)
