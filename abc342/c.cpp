@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
+#include <tuple>
 #include <vector>
 
 #define print_vec(v)                                           \
@@ -22,18 +23,30 @@ int main()
   int Q;
   cin >> Q;
 
+  string mapping_from = "abcdefghijklmnopqrstuvwxyz";
+  string mapping_to = mapping_from;
+
   for (int i = 0; i < Q; i++)
   {
     string c, d;
     cin >> c >> d;
 
-    for (int j = 0; j < N; j++)
+    for (u_long j = 0; j < mapping_to.size(); j++)
     {
-      if (S[j] == c[0])
+      if (mapping_to[j] == c[0])
       {
-        S[j] = d[0];
+        mapping_to[j] = d[0];
       }
     }
+  }
+
+  // cout << mapping_from << endl;
+  // cout << mapping_to << endl;
+
+  for (int i = 0; i < N; i++)
+  {
+    uint mapping_i = mapping_from.find(S[i]);
+    S[i] = mapping_to[mapping_i];
   }
 
   cout << S << endl;
