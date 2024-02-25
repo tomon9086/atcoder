@@ -12,10 +12,10 @@ CONTEST_ID := $(c)
 PROBLEM_NUMBER := $(q)
 
 # テンプレートファイル名の設定
-TEMPLATE_HELLO_WORLD := _templates/cpp/helloworld.cpp
+TEMPLATE_HELLO_WORLD := templates/cpp/helloworld.cpp
 
 # テストファイルディレクトリの設定
-TESTS_DIR := _tests
+TESTS_DIR := tests
 PROBLEM_TEST_DIR=$(TESTS_DIR)/$(CONTEST_ID)/$(PROBLEM_NUMBER)
 MAX_TEST_NUMBER := $(shell ls -1 $(PROBLEM_TEST_DIR)/*.txt 2>/dev/null | awk -F/ '{print $$NF}' | awk -F. '{print $$1}' | sort -n | tail -n 1)
 NEXT_TEST_NUMBER := $(shell echo $$(($(MAX_TEST_NUMBER) + 1)))
