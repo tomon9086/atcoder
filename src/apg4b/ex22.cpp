@@ -19,29 +19,12 @@ int main()
   int N;
   cin >> N;
 
-  vector<int> A(N);
-  vector<int> B(N);
-  rep(i, N) cin >> A.at(i) >> B.at(i);
+  vector<pair<int, int>> AB(N);
+  rep(i, N) cin >> AB.at(i).second >> AB.at(i).first;
 
-  rep(i, N)
-  {
-    int minB = 1000000000;
-    rep(j, N)
-    {
-      if (B.at(j) <= minB)
-      {
-        minB = B.at(j);
-      }
-    }
-    rep(j, N)
-    {
-      if (B.at(j) <= minB)
-      {
-        cout << A.at(j) << " " << B.at(j) << endl;
-        B.at(j) = 1000000000;
-      }
-    }
-  }
+  sort(AB.begin(), AB.end());
+
+  rep(i, N) cout << AB.at(i).second << " " << AB.at(i).first << endl;
 
   return 0;
 }
