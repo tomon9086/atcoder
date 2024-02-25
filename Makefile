@@ -2,10 +2,10 @@
 .DEFAULT_GOAL := all
 
 # コンパイラの設定
-CXX := clang++
+CXX := g++
 
 # コンパイルオプションの設定
-CXXFLAGS := -std=c++11 -Wall -Wextra
+CXXFLAGS := -std=c++20 -Wall -Wextra
 
 # 変数
 CONTEST_ID := $(c)
