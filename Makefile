@@ -45,7 +45,7 @@ check_vars:
 .PHONY: new
 new: check_vars
 	mkdir -p $(CONTEST_ID)
-	cp $(TEMPLATE_HELLO_WORLD) $(SRC)
+	cp -i $(TEMPLATE_HELLO_WORLD) $(SRC)
 
 # テストファイルを作成するルール
 .PHONY: test_new
