@@ -22,8 +22,8 @@ NEXT_TEST_NUMBER := $(shell echo $$(($(MAX_TEST_NUMBER) + 1)))
 PROBLEM_TEST_FILES := $(wildcard $(PROBLEM_TEST_DIR)/*.txt)
 
 # ファイル名の設定
-SRC := $(CONTEST_ID)/$(PROBLEM_NUMBER).cpp
-OUT := $(CONTEST_ID)/$(PROBLEM_NUMBER).out
+SRC := src/$(CONTEST_ID)/$(PROBLEM_NUMBER).cpp
+OUT := src/$(CONTEST_ID)/$(PROBLEM_NUMBER).out
 
 # ターゲットを作成
 .PHONY: all
