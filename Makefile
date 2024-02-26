@@ -10,6 +10,7 @@ CXXFLAGS := -std=c++20 -Wall -Wextra
 # 変数
 CONTEST_ID := $(c)
 PROBLEM_NUMBER := $(q)
+TEST_FILES := $(t)
 
 # テンプレートファイル名の設定
 TEMPLATE_HELLO_WORLD := templates/cpp/helloworld.cpp
@@ -65,7 +66,20 @@ run: $(OUT)
 
 # 全テストファイルを実行するルール
 .PHONY: test
-test: check_vars $(OUT) $(PROBLEM_TEST_FILES:%.txt=%_run)
+test: check_vars $(OUT)
+ifdef TEST_FILES
+	@for file in $(TEST_FILES); do \
+		if [ -f "$(PROBLEM_TEST_DIR)/$$file.txt" ]; then \
+			$(MAKE) $(PROBLEM_TEST_DIR)/$$file\_run; \
+		else \
+			echo "File $$file.txt does not exist."; \
+		fi; \
+	done
+else
+	@for file in $(PROBLEM_TEST_FILES); do \
+		$(MAKE) $${file%.*}_run; \
+	done
+endif
 
 # 各テストファイルを実行するルール
 $(PROBLEM_TEST_DIR)/%_run: $(PROBLEM_TEST_DIR)/%.txt
