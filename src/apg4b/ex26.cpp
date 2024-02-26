@@ -13,13 +13,14 @@ typedef long long ll;
 using namespace std;
 
 typedef pair<string, int> IntVar;
-typedef pair<string, vector<int>> VecVar;
+typedef vector<int> Vec;
+typedef pair<string, Vec> VecVar;
 
 vector<IntVar> int_map;
 vector<VecVar> vec_map;
 
 // 問題文の形式でvec値を出力
-void print_vec(vector<int> vec)
+void print_vec(Vec vec)
 {
   cout << "[ ";
   rep(i, (ll)vec.size())
@@ -29,7 +30,7 @@ void print_vec(vector<int> vec)
   cout << "]" << endl;
 }
 
-int calc(int lhs, char op, int rhs)
+int calcInt(int lhs, char op, int rhs)
 {
   if (op == 0)
   {
@@ -49,6 +50,20 @@ int calc(int lhs, char op, int rhs)
   }
 }
 
+int findIntVar(string token)
+{
+  rep(i, (ll)int_map.size())
+  {
+    if (int_map.at(i).first == token)
+    {
+      return int_map.at(i).second;
+    }
+  }
+
+  cerr << "unexpected identifier: " << token << endl;
+  return 0;
+}
+
 int parseIntExpr()
 {
   string token;
@@ -61,7 +76,7 @@ int parseIntExpr()
     int n = ch - '0';
     if (0 <= n && n < 10)
     {
-      int_expr = calc(int_expr, op, n);
+      int_expr = calcInt(int_expr, op, n);
       op = 0;
     }
     else if (ch == '+' || ch == '-')
@@ -74,24 +89,112 @@ int parseIntExpr()
     }
     else
     {
-      bool isFound = false;
-      rep(i, (ll)int_map.size())
+      int_expr = calcInt(int_expr, op, findIntVar(token));
+      op = 0;
+    }
+  }
+
+  return int_expr;
+}
+
+Vec calcVec(Vec lhs, char op, Vec rhs)
+{
+  if (op == 0)
+  {
+    return rhs;
+  }
+  else if (op == '+')
+  {
+    rep(i, (ll)lhs.size()) lhs.at(i) += rhs.at(i);
+    return lhs;
+  }
+  else if (op == '-')
+  {
+    rep(i, (ll)lhs.size()) lhs.at(i) -= rhs.at(i);
+    return lhs;
+  }
+  else
+  {
+    return lhs;
+  }
+}
+
+Vec findVecVar(string token)
+{
+  rep(i, (ll)vec_map.size())
+  {
+    if (vec_map.at(i).first == token)
+    {
+      return vec_map.at(i).second;
+    }
+  }
+
+  cerr << "unexpected identifier: " << token << endl;
+  return {};
+}
+
+Vec parseVecExpr()
+{
+  string token;
+  Vec vec_expr;
+  int n;
+  char op = 0;
+  while (true)
+  {
+    cin >> token;
+
+    if (token == ";")
+    {
+      return vec_expr;
+    }
+    else if (token == "[")
+    {
+      Vec v;
+      while (true)
       {
-        if (int_map.at(i).first == token)
+        cin >> token;
+        if (token == "]")
         {
-          int_expr = calc(int_expr, op, int_map.at(i).second);
-          op = 0;
-          isFound = true;
           break;
+        }
+
+        try
+        {
+          n = stoi(token);
+          v.push_back(n);
+        }
+        catch (const std::exception &e)
+        {
+          if (token == ",")
+          {
+            continue;
+          }
+          else
+          {
+            v.push_back(findIntVar(token));
+          }
         }
       }
 
-      if (!isFound)
-      {
-        cerr << "unexpected identifier: " << token << endl;
-      }
+      vec_expr = calcVec(vec_expr, op, v);
+      op = 0;
+    }
+    else if (token == "+")
+    {
+      op = '+';
+    }
+    else if (token == "-")
+    {
+      op = '-';
+    }
+    else
+    {
+      vec_expr = calcVec(vec_expr, op, findVecVar(token));
+      op = 0;
     }
   }
+
+  return vec_expr;
 }
 
 int main()
@@ -116,13 +219,28 @@ int main()
         int_map.push_back({identifier, parseIntExpr()});
         break;
       }
+      else if (token == "vec")
+      {
+        string identifier;
+        cin >> identifier;
+        cin >> gomi;
+
+        vec_map.push_back({identifier, parseVecExpr()});
+        break;
+      }
       else if (token == "print_int")
       {
         cout << parseIntExpr() << endl;
         break;
       }
+      else if (token == "print_vec")
+      {
+        print_vec(parseVecExpr());
+        break;
+      }
 
       // cout << int_map.at(0).first << "=" << int_map.at(0).second << endl;
+      print_vec(vec_map.at(0).second);
       // cout << token << endl;
     }
   }
