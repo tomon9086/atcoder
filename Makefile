@@ -23,8 +23,9 @@ NEXT_TEST_NUMBER := $(shell echo $$(($(MAX_TEST_NUMBER) + 1)))
 PROBLEM_TEST_FILES := $(wildcard $(PROBLEM_TEST_DIR)/*.txt)
 
 # ファイル名の設定
-SRC := src/$(CONTEST_ID)/$(PROBLEM_NUMBER).cpp
-OUT := src/$(CONTEST_ID)/$(PROBLEM_NUMBER).out
+SRC_DIR := src/$(CONTEST_ID)
+SRC := $(SRC_DIR)/$(PROBLEM_NUMBER).cpp
+OUT := $(SRC_DIR)/$(PROBLEM_NUMBER).out
 
 # ターゲットを作成
 .PHONY: all
@@ -45,7 +46,7 @@ check_vars:
 # ファイルを作成するルール
 .PHONY: new
 new: check_vars
-	mkdir -p $(CONTEST_ID)
+	mkdir -p $(SRC_DIR)
 	cp -i $(TEMPLATE_HELLO_WORLD) $(SRC)
 
 # テストファイルを作成するルール
