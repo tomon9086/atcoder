@@ -1,5 +1,8 @@
 
-int _main(istream &cin, ostream &cout)
+const bool SHOW_STDOUT = false;
+const uint32_t ITERATION = 10;
+
+int _main(istream &cin, stringstream &cout)
 {
   // write your code here
   cout << "Hello, world!" << endl;
@@ -13,13 +16,12 @@ int main()
   string line;
   while (getline(cin, line))
   {
-    input_buf << line << '\n';
+    input_buf << line << endl;
   }
 
-  uint32_t iteration = 10;
-  vector<int64_t> results(iteration);
+  vector<int64_t> results(ITERATION);
 
-  for (uint32_t i = 0; i < iteration; i++)
+  for (uint32_t i = 0; i < ITERATION; i++)
   {
     input_buf.seekg(0);
 
@@ -27,32 +29,40 @@ int main()
     int exit_code = _main(input_buf, output_buf);
     auto stop = chrono::high_resolution_clock::now();
 
+    if (SHOW_STDOUT)
+    {
+      cout << "== iteration: " << i << " ==" << endl;
+      cout << output_buf.str() << endl;
+    }
+    output_buf.str("");
+    output_buf.clear();
+
     results.at(i) = chrono::duration_cast<chrono::nanoseconds>(stop - start).count();
   }
 
   int64_t sum = 0;
-  for (uint32_t i = 0; i < iteration; i++)
+  for (uint32_t i = 0; i < ITERATION; i++)
   {
     sum += results.at(i);
   }
 
-  double ave = (double)sum / (double)iteration;
+  double ave = (double)sum / (double)ITERATION;
 
-  double med = results.at(iteration / 2);
-  if (iteration % 2 == 0)
+  double med = results.at(ITERATION / 2);
+  if (ITERATION % 2 == 0)
   {
-    med += results.at(iteration / 2 - 1);
+    med += results.at(ITERATION / 2 - 1);
     med /= 2.0;
   }
 
   int64_t sq_diff_sum = 0;
-  for (uint32_t i = 0; i < iteration; i++)
+  for (uint32_t i = 0; i < ITERATION; i++)
   {
     int64_t d = results.at(i) - ave;
     sq_diff_sum += d * d;
   }
 
-  double sd = sqrt((double)sq_diff_sum / (double)iteration);
+  double sd = sqrt((double)sq_diff_sum / (double)ITERATION);
 
   cout << "ave: " << ave << " ns" << endl;
   cout << "med: " << med << " ns" << endl;
