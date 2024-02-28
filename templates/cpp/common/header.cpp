@@ -1,7 +1,9 @@
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <iostream>
 #include <iterator>
+#include <sstream>
 #include <utility>
 #include <vector>
 
@@ -14,9 +16,3 @@ typedef long long ll;
   cout << endl;
 
 using namespace std;
-
-int main()
-{
-  cout << "Hello, world!" << endl;
-  return 0;
-}

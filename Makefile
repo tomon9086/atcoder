@@ -13,7 +13,9 @@ PROBLEM_NUMBER := $(q)
 TEST_FILES := $(t)
 
 # テンプレートファイル名の設定
-TEMPLATE_HELLO_WORLD := templates/cpp/helloworld.cpp
+TEMPLATES_DIR := templates/cpp
+TEMPLATE_COMMON_HEADER := $(TEMPLATES_DIR)/common/header.cpp
+TEMPLATE_HELLO_WORLD_NAME := helloworld
 
 # テストファイルディレクトリの設定
 TESTS_DIR := tests
@@ -45,9 +47,19 @@ check_vars:
 
 # ファイルを作成するルール
 .PHONY: new
-new: check_vars
+new: new_$(TEMPLATE_HELLO_WORLD_NAME)
+
+# ファイルを作成するルール
+new_%: check_vars
 	mkdir -p $(SRC_DIR)
-	cp -i $(TEMPLATE_HELLO_WORLD) $(SRC)
+	@if [ -e "$(SRC)" ]; then \
+		read -p "File \"$(SRC)\" exists. Do you want to continue? (y/N): " choice; \
+		case "$$choice" in \
+			[yY]) ;; \
+			*) echo "Aborted."; exit 1 ;; \
+		esac; \
+	fi
+	cat $(TEMPLATE_COMMON_HEADER) $(TEMPLATES_DIR)/$(patsubst new_%,%,$@).txt > $(SRC)
 
 # テストファイルを作成するルール
 .PHONY: test_new
