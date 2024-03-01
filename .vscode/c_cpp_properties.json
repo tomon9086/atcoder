@@ -3,9 +3,13 @@
     {
       "name": "macos-gcc-arm64",
       "intelliSenseMode": "gcc-arm64",
-      // "macFrameworkPath": ["/System/Library/Frameworks", "/Library/Frameworks"],
       "cStandard": "c11",
       "cppStandard": "c++20"
+    },
+    {
+      "name": "wsl-gcc-x86",
+      "includePath": ["${workspaceFolder}/**"],
+      "defines": ["_DEBUG", "UNICODE", "_UNICODE"]
     }
   ],
   "version": 4
