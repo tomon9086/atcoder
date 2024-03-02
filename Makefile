@@ -60,13 +60,16 @@ new_%: check_vars
 		esac; \
 	fi
 	cat $(TEMPLATE_COMMON_HEADER) $(TEMPLATES_DIR)/$(patsubst new_%,%,$@).txt > $(SRC)
+	@echo ""
+	@echo "Created source file $(SRC) !"
 
 # テストファイルを作成するルール
-.PHONY: test_new
-test_new: check_vars
+.PHONY: new_test
+new_test: check_vars
 	mkdir -p $(PROBLEM_TEST_DIR)
 	touch $(PROBLEM_TEST_DIR)/$(NEXT_TEST_NUMBER).txt
-	@echo "Created file $(NEXT_TEST_NUMBER).txt"
+	@echo ""
+	@echo "Created test file $(PROBLEM_TEST_DIR)/$(NEXT_TEST_NUMBER).txt !"
 
 # a.outを作成するルール
 $(OUT): $(SRC)
