@@ -17,21 +17,6 @@ typedef long long ll;
 
 using namespace std;
 
-bool judge(vector<int> a,
-           vector<int> b,
-           vector<int> c, int x)
-{
-  rep(i, a.size()) rep(j, b.size()) rep(k, c.size())
-  {
-    if (a.at(i) + b.at(j) + c.at(k) == x)
-    {
-      return true;
-    }
-  }
-
-  return false;
-}
-
 int main()
 {
   int n, m, l, q;
@@ -48,20 +33,27 @@ int main()
   // vector<int> x(q);
   // rep(i, q) cin >> x.at(i);
 
+  vector<int> dekiru;
+  rep(i, n) rep(j, m) rep(k, l)
+  {
+    dekiru.push_back(a.at(i) + b.at(j) + c.at(k));
+  }
+
+  sort(dekiru.begin(), dekiru.end());
+
   rep(i, q)
   {
     int x;
     cin >> x;
 
-    bool result = judge(a, b, c, x);
-
-    if (result)
+    auto iter = find(dekiru.begin(), dekiru.end(), x);
+    if (iter == dekiru.end())
     {
-      cout << "Yes" << endl;
+      cout << "No" << endl;
     }
     else
     {
-      cout << "No" << endl;
+      cout << "Yes" << endl;
     }
   }
 
