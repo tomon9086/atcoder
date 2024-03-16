@@ -46,15 +46,15 @@ int main()
   }
 
   int sum = 0;
-  rep(i, 0, 26) rep(j, 0, 26)
+  rep(i, 0, 26) rep(j, i + 1, 26)
   {
-    if (j != i && count.at(i) > 0)
+    if (count.at(i) > 0 && count.at(j) > 0)
     {
-      sum += count.at(j);
+      sum += max(count.at(i), count.at(j));
     }
   }
 
-  cout << sum / 2 << endl;
+  cout << sum << endl;
   // print_vec(int, count);
   return 0;
 }
