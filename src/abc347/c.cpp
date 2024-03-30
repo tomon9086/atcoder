@@ -27,22 +27,34 @@ ll distance(ll hou, set<ll> d_mod)
   ll zero_hasamanai = d_max - d_min + 1;
   ll zero_hasamu = (d_min + 1) + (hou - d_max + 1);
 
-  // cout << "zero_hasamanai: " << zero_hasamanai << endl;
-  // cout << "   zero_hasamu: " << zero_hasamu << endl;
+  cout << "zero_hasamanai: " << zero_hasamanai << endl;
+  cout << "   zero_hasamu: " << zero_hasamu << endl;
 
   if (zero_hasamanai - zero_hasamu > 0)
   {
-    vector<ll> v(d_mod.size());
-    copy(d_mod.begin(), d_mod.end(), back_inserter(v));
-    rep(i, 0, v.size()) v[i] = (hou + v[i] - d_min - 1) % hou;
-    auto minmax = minmax_element(v.begin(), v.end());
+    set<ll> st;
+    // copy(d_mod.begin(), d_mod.end(), back_inserter(v));
+    // rep(i, 0, v.size()) v[i] = (hou + v[i] - d_min - 1) % hou;
+    for (auto it = d_mod.begin(); it != d_mod.end(); it++)
+    {
+      ll hgoe = (*it - d_min - 1) % hou;
+      if (hgoe < 0)
+      {
+        st.insert(hou + hgoe);
+      }
+      else
+      {
+        st.insert(hgoe);
+      }
+    }
+    auto minmax = minmax_element(st.begin(), st.end());
     ll d_min = *minmax.first;
     ll d_max = *minmax.second;
 
-    // print_vec(ll, v);
+    print_vec(ll, st);
 
     ll zero_hasamanai = d_max - d_min + 1;
-    // cout << "zero_hasamanai: " << zero_hasamanai << endl;
+    cout << "zero_hasamanai: " << zero_hasamanai << endl;
 
     return zero_hasamanai;
   }
@@ -64,7 +76,7 @@ int main()
     d_mod.insert(d % (a + b));
   }
 
-  // print_vec(ll, d_mod);
+  print_vec(ll, d_mod);
   ll dist = distance(a + b, d_mod);
   if (dist > a)
   {
