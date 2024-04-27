@@ -9,6 +9,8 @@
 #include <utility>
 #include <vector>
 
+#include <cstdio>
+
 typedef long long ll;
 
 #define rep(i, begin, end) for (ll i = (begin); i < (end); i++)
@@ -19,15 +21,15 @@ typedef long long ll;
 
 using namespace std;
 
-vector<int> f(vector<int> a)
+vector<int> f(int n, vector<int> a)
 {
   vector<int> ret;
   int prev = -1;
-  rep(i, 0, a.size())
+  rep(i, 0, n)
   {
     if (prev < 0)
     {
-      if (i == a.size() - 1)
+      if (i == n - 1)
       {
         ret.push_back(a[i]);
       }
@@ -42,7 +44,7 @@ vector<int> f(vector<int> a)
     else
     {
       ret.push_back(prev);
-      if (i == a.size() - 1)
+      if (i == n - 1)
       {
         ret.push_back(a[i]);
       }
@@ -55,18 +57,33 @@ vector<int> f(vector<int> a)
 
 int main()
 {
+  cin.tie(nullptr);
+  ios::sync_with_stdio(false);
+
+  // auto start = chrono::high_resolution_clock::now();
+
   int n;
   cin >> n;
   vector<int> a(n);
   rep(i, 0, n)
   {
-    cin >> a[i];
+    // cin >> a[i];
+    scanf("%d", &a[i]);
   }
 
+  // auto stop = chrono::high_resolution_clock::now();
+  // // cout << chrono::duration_cast<chrono::nanoseconds>(stop - start).count() << endl;
+
+  // start = chrono::high_resolution_clock::now();
+
+  // int count = 0;
   while (true)
   {
-    auto ret = f(a);
-    if (ret.size() == a.size())
+    // count++;
+    // print_vec(int, a);
+    int n = a.size();
+    auto ret = f(n, a);
+    if (ret.size() == n)
     {
       break;
     }
@@ -74,6 +91,10 @@ int main()
     a = ret;
   }
 
+  // stop = chrono::high_resolution_clock::now();
+  // // cout << chrono::duration_cast<chrono::nanoseconds>(stop - start).count() << endl;
+
+  // cout << count << endl;
   cout << a.size() << endl;
   return 0;
 }
