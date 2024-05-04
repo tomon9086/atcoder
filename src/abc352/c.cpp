@@ -35,34 +35,28 @@ int main()
 {
   int n;
   cin >> n;
-  vector<pair<int, int>> ab(n);
-  rep(i, 0, n) cin >> ab[i].first >> ab[i].second;
+  vector<pair<int, pair<int, int>>> ab(n);
+  rep(i, 0, n)
+  {
+    int a, b;
+    cin >> a >> b;
+    // diff
+    ab[i].first = a - b;
+    // shoulder
+    ab[i].second.first = a;
+    // head
+    ab[i].second.second = b;
+  }
 
   sort(ab.begin(), ab.end());
-  ll sum_shoulder = 0;
+  ll sum = 0;
   rep(i, 1, n)
   {
     // cout << i << ": " << ab[i].first << endl;
-    sum_shoulder += ab[i].first;
+    sum += ab[i].second.first;
   }
-  sum_shoulder += ab.front().second;
+  sum += ab.front().second.second;
 
-  sort(ab.begin(), ab.end(), compare_by_b);
-  ll sum_head = 0;
-  rep(i, 1, n)
-  {
-    // cout << i << ": " << ab[i].first << endl;
-    sum_head += ab[i].first;
-  }
-  sum_head += ab.front().second;
-
-  if (sum_shoulder < sum_head)
-  {
-    cout << sum_head << endl;
-  }
-  else
-  {
-    cout << sum_shoulder << endl;
-  }
+  cout << sum << endl;
   return 0;
 }
