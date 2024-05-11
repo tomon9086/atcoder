@@ -21,18 +21,32 @@ using namespace std;
 
 const int HOU = 100000000;
 
-ll paa(int n, vector<int> a, int i)
+ll factorial(ll n)
 {
-  // return 0.5 * (n - i - 1) * (a[0] + a[i + 1] + a.back());
-
-  ll sum = 0;
-  rep(k, i + 1, n)
+  if (n <= 0)
   {
-    sum += (a[i] + a[k]) % HOU;
-    // cout << "a: " << i << " " << k << " = " << sum << endl;
+    return 0;
+  }
+  if (n <= 1)
+  {
+    return 1;
   }
 
-  return sum;
+  return n * factorial(n - 1);
+}
+
+ll paa(int n, vector<int> a, int i)
+{
+  return 0.5 * (n - i - 1) * (a[0] + a[i + 1] + a.back());
+
+  // ll sum = 0;
+  // rep(k, i + 1, n)
+  // {
+  //   sum += (a[i] + a[k]) % HOU;
+  //   // cout << "a: " << i << " " << k << " = " << sum << endl;
+  // }
+
+  // return sum;
 }
 
 int main()
@@ -40,15 +54,33 @@ int main()
   int n;
   cin >> n;
   vector<int> a(n);
-  rep(i, 0, n) cin >> a[i];
+  int count_5_no_7_jou_ijou = 0;
+  rep(i, 0, n)
+  {
+    int a_i;
+    cin >> a_i;
+
+    if (a_i >= 50000000)
+    {
+      count_5_no_7_jou_ijou++;
+    }
+
+    a[i] = a_i;
+  }
 
   ll sum = 0;
   rep(i, 0, n - 1)
   {
-    // sum += (i + 1) * paa(n, a, i);
-    sum += paa(n, a, i);
+    ll hoge = paa(n, a, i);
+    sum += ((i + 1) * hoge) % HOU;
+    // sum += paa(n, a, i);
     // cout << "b: " << i + 1 << " = " << sum << endl;
+    cout << "f(A_" << i + 1 << ", A_" << i + 2 << "~" << n << ")" << hoge << endl;
   }
+
+  // cout << count_5_no_7_jou_ijou << endl;
+  // cout << factorial(count_5_no_7_jou_ijou) << endl;
+  sum += (factorial(count_5_no_7_jou_ijou) / 2) * HOU;
 
   cout << sum << endl;
   return 0;
