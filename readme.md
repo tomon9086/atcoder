@@ -1,5 +1,9 @@
 # AtCoder
 
+## Environment
+
+- C++20 (GCC 12)
+
 ## Usage
 
 ### Create a new answer
