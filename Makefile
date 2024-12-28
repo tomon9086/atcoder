@@ -67,7 +67,7 @@ new_%: check_vars
 .PHONY: new_test
 new_test: check_vars
 	mkdir -p $(PROBLEM_TEST_DIR)
-	@if test -t 0; then \
+	@if [ -t 0 ]; then \
 		touch $(PROBLEM_TEST_DIR)/$(NEXT_TEST_NUMBER).txt; \
 	else \
 		cat > $(PROBLEM_TEST_DIR)/$(NEXT_TEST_NUMBER).txt; \
