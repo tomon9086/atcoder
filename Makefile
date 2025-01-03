@@ -8,8 +8,8 @@ CXX := g++
 CXXFLAGS := -std=c++20 -Wall -Wextra
 
 # 変数
-CONTEST_ID := $(c)
-PROBLEM_NUMBER := $(q)
+CONTEST_ID := $(if $(c),$(c),$(shell grep -E "^c=" .env | cut -d= -f2))
+PROBLEM_NUMBER := $(if $(q),$(q),$(shell grep -E "^q=" .env | cut -d= -f2))
 TEST_FILES := $(t)
 
 # テンプレートファイル名の設定
@@ -44,6 +44,23 @@ check_vars:
 		echo "ERROR: q is not defined. Please specify the file name."; \
 		exit 1; \
 	fi
+
+# 環境変数を設定するルール
+.PHONY: init
+init:
+	@if [ -f .env ] && [ -s .env ]; then \
+		. .env; \
+	fi; \
+	read -p "Contest ID? (default: $$c): " contest_id; \
+	read -p "Problem Number? (default: $$q): " problem_number; \
+	c=$${contest_id:-$$c}; \
+	q=$${problem_number:-$$q}; \
+	echo "c=$$c" > .env; \
+	echo "q=$$q" >> .env; \
+	echo ""; \
+	echo "Initialized!"; \
+	echo "  Contest ID     : $$c"; \
+	echo "  Problem Number : $$q"
 
 # ファイルを作成するルール
 .PHONY: new
