@@ -8,8 +8,8 @@ CXX := g++
 CXXFLAGS := -std=c++20 -Wall -Wextra
 
 # 変数
-CONTEST_ID := $(if $(c),$(c),$(shell grep -E "^c=" .env | cut -d= -f2))
-PROBLEM_NUMBER := $(if $(q),$(q),$(shell grep -E "^q=" .env | cut -d= -f2))
+CONTEST_ID := $(if $(c),$(c),$(shell grep -sE "^c=" .env | cut -d= -f2))
+PROBLEM_NUMBER := $(if $(q),$(q),$(shell grep -sE "^q=" .env | cut -d= -f2))
 TEST_FILES := $(t)
 
 # テンプレートファイル名の設定
