@@ -6,26 +6,53 @@
 
 ## Usage
 
+### Initialize Contest
+
+Run this script before every contest.
+
+```console
+make init
+```
+
+_Contest ID will be saved to .env file._
+
+Output example
+
+```plain
+Contest ID? (default: ): abc000
+Problem Number? (default: ): a
+
+Initialized!
+  Contest ID     : abc000
+  Problem Number : a
+```
+
 ### Create a new answer
 
 ```console
-c=abc000 q=a make new
+make new
 ```
 
 ### Create a new test input
 
 ```console
-c=abc000 q=a make new_test
+make new_test
 ```
 
 (with Pasteboard content)
 
 ```console
-pbpaste | c=abc000 q=a make new_test
+pbpaste | make new_test
 ```
 
 ### Run with all test inputs
 
 ```console
-c=abc000 q=a make test
+make test
+```
+
+### (Optional) Temporary Contest ID
+
+```console
+c=abc000 q=a make new
 ```
