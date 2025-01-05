@@ -24,8 +24,24 @@ int main()
   int h, w, q;
   cin >> h >> w;
   vector<vector<int>> x(h, vector<int>(w, 0));
-  rep(i, 0, h) rep(j, 0, w) cin >> x[i][j];
+  rep(i, 0, h) rep(j, 0, w)
+  {
+    if (j > 0)
+    {
+      x[i][j] = x[i][j - 1];
+    }
+
+    int a;
+    cin >> a;
+
+    x[i][j] += a;
+  }
   cin >> q;
+
+  // rep(i, 0, x[0].size())
+  // {
+  //   print_vec(int, x[i]);
+  // }
 
   rep(_, 0, q)
   {
@@ -33,9 +49,9 @@ int main()
     cin >> a >> b >> c >> d;
 
     int sum = 0;
-    rep(i, a - 1, c) rep(j, b - 1, d)
+    rep(i, a - 1, c)
     {
-      sum += x[i][j];
+      sum += x[i][d - 1] - (b > 1 ? x[i][b - 2] : 0);
     }
 
     cout << sum << endl;
