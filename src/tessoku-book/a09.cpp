@@ -24,20 +24,35 @@ int main()
   int h, w, n;
   cin >> h >> w >> n;
 
-  vector<vector<int>> z(h, vector<int>(w, 0));
+  vector<vector<int>> z_diff(h, vector<int>(w, 0));
 
   rep(_, 0, n)
   {
     int a, b, c, d;
     cin >> a >> b >> c >> d;
 
-    rep(i, a - 1, c)
-    {
-      rep(j, b - 1, d)
-      {
-        z[i][j] += 1;
-      }
-    }
+    z_diff[a - 1][b - 1]++;
+    if (d < w)
+      z_diff[a - 1][d]--;
+    if (c < h)
+      z_diff[c][b - 1]--;
+    if (c < h && d < w)
+      z_diff[c][d]++;
+  }
+
+  vector<vector<int>> z(h, vector<int>(w, 0));
+
+  rep(i, 0, h) rep(j, 0, w)
+  {
+    if (j > 0)
+      z_diff[i][j] += z_diff[i][j - 1];
+  }
+
+  rep(i, 0, h) rep(j, 0, w)
+  {
+    z[i][j] = z_diff[i][j];
+    if (i > 0)
+      z[i][j] += z[i - 1][j];
   }
 
   rep(i, 0, h)
