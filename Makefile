@@ -95,6 +95,7 @@ new_test: check_vars
 # a.outを作成するルール
 $(OUT): $(SRC)
 	$(CXX) $(CXXFLAGS) $< -o $@
+	@echo "Compiled successfully! > $@"
 
 # a.outを実行するルール
 .PHONY: run
