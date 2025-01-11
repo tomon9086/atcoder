@@ -19,6 +19,28 @@ typedef long long ll;
 
 using namespace std;
 
+ll check(vector<int> &a, int sec)
+{
+  ll papers = 0;
+  rep(i, 0, a.size()) papers += sec / a[i];
+
+  return papers;
+}
+
+int search(vector<int> &a, int k, int l, int r)
+{
+  int size = r - l;
+  if (size <= 1)
+    return l;
+
+  int mid = l + size / 2;
+  ll papers = check(a, mid);
+  if (papers >= k)
+    return search(a, k, l, mid);
+  else
+    return search(a, k, mid + 1, r);
+}
+
 int main()
 {
   int n, k;
@@ -26,9 +48,6 @@ int main()
   vector<int> a(n, 0);
   rep(i, 0, n) cin >> a[i];
 
-  double papers_per_sec = 0.0;
-  rep(i, 0, n) papers_per_sec += 1.0 / a[i];
-
-  cout << ceilf(k / papers_per_sec) << endl;
+  cout << search(a, k, 0, 1e9) << endl;
   return 0;
 }
