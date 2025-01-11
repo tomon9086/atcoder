@@ -26,7 +26,7 @@ int main()
   vector<int> a(n, 0);
   rep(i, 0, n) cin >> a[i];
 
-  int count = 0;
+  ll count = 0;
   rep(i, 0, n - 1)
   {
     auto b = lower_bound(a.begin() + i + 1, a.end(), a[i] * 2);
