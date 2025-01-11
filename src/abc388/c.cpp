@@ -27,12 +27,13 @@ int main()
   rep(i, 0, n) cin >> a[i];
 
   int count = 0;
-  rep(i, 0, n - 1) rep(j, i + 1, n)
+  rep(i, 0, n - 1)
   {
-    if (a[j] >= a[i] * 2)
-    {
-      count++;
-    }
+    auto b = lower_bound(a.begin() + i + 1, a.end(), a[i] * 2);
+    int j = distance(a.begin(), b);
+    // cout << "j: " << j << endl;
+    if (j < a.size())
+      count += n - j;
   }
 
   cout << count << endl;
