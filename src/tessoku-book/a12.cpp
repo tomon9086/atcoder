@@ -29,11 +29,10 @@ ll check(vector<int> &a, int sec)
 
 int search(vector<int> &a, int k, int l, int r)
 {
-  int size = r - l;
-  if (size <= 1)
+  if (l >= r)
     return l;
 
-  int mid = l + size / 2;
+  int mid = (l + r) / 2;
   ll papers = check(a, mid);
   if (papers >= k)
     return search(a, k, l, mid);
