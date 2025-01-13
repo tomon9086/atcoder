@@ -29,7 +29,9 @@ int main()
   vector<int> table(n, 0);
   copy(a.begin(), a.end(), table.begin());
   sort(table.begin(), table.end());
-  table.erase(unique(table.begin(), table.end()));
+  auto unique_iter = unique(table.begin(), table.end());
+  if (unique_iter != table.end())
+    table.erase(unique_iter);
 
   // cout << table.size() << endl;
   // print_vec(int, table);
