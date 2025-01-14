@@ -30,8 +30,7 @@ int main()
   copy(a.begin(), a.end(), table.begin());
   sort(table.begin(), table.end());
   auto unique_iter = unique(table.begin(), table.end());
-  if (unique_iter != table.end())
-    table.erase(unique_iter);
+  table.erase(unique_iter, table.end());
 
   // cout << table.size() << endl;
   // print_vec(int, table);
