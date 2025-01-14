@@ -19,6 +19,8 @@ typedef long long ll;
 
 using namespace std;
 
+const int INF = 1e7;
+
 int main()
 {
   int n;
@@ -27,34 +29,22 @@ int main()
   rep(i, 0, n - 1) cin >> a[i];
   rep(i, 0, n - 2) cin >> b[i];
 
-  int sum = 0;
+  vector<int> weight(n, INF);
   rep(i, 0, n)
   {
-    if (i >= n - 1)
-      break;
-
-    int w_1 = INT_MAX, w_2 = INT_MAX;
-
-    if (i < a.size())
-      w_1 = a[i];
-    if (i + 1 < a.size())
-      w_1 += a[i + 1];
-    if (i < b.size())
-      w_2 = b[i];
-
-    cout << i << " " << w_1 << " " << w_2 << endl;
-
-    if (w_1 < w_2)
+    if (i == 0)
     {
-      sum += w_1;
+      weight[i] = 0;
+      continue;
     }
-    else
-    {
-      sum += w_2;
-      i++;
-    }
+
+    int w_a = weight[i - 1] + a[i - 1];
+    int w_b = i > 1 ? weight[i - 2] + b[i - 2] : INF;
+    weight[i] = min(w_a, w_b);
   }
 
-  cout << sum << endl;
+  // print_vec(int, weight);
+
+  cout << weight[n - 1] << endl;
   return 0;
 }
