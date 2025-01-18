@@ -24,7 +24,8 @@ int main()
   int q;
   cin >> q;
 
-  vector<int> snake_lengths(0);
+  size_t head = 0;
+  vector<pair<ll, int>> snake_head_lengths(0);
   rep(_, 0, q)
   {
     int type;
@@ -32,29 +33,39 @@ int main()
     switch (type)
     {
     case 1:
+    {
       int l;
       cin >> l;
 
-      snake_lengths.push_back(l);
+      auto last_snake = snake_head_lengths.size() > 0 ? snake_head_lengths.back() : make_pair<ll, int>(0, 0);
+      snake_head_lengths.push_back({last_snake.first + last_snake.second, l});
       break;
+    }
     case 2:
-      snake_lengths.erase(snake_lengths.begin());
+    {
+      head++;
       break;
+    }
     case 3:
+    {
       int k;
       cin >> k;
 
-      ll sum = 0;
-      rep(i, 0, k - 1)
-      {
-        sum += snake_lengths[i];
-      }
+      // cout << "k: " << k << ", head: " << head << endl;
 
-      cout << sum << endl;
+      auto head_snake = snake_head_lengths[head];
+      auto kth_snake = snake_head_lengths[head + k - 1];
+      cout << kth_snake.first - head_snake.first << endl;
       break;
     }
+    }
 
-    // print_vec(int, snake_lengths);
+    // rep(i, 0, snake_head_lengths.size())
+    // {
+    //   cout << i << ": ";
+    //   print_pair(snake_head_lengths[i]);
+    // }
+    // cout << endl;
   }
 
   return 0;
