@@ -27,6 +27,10 @@ int main()
   vector<int> pegeon_pos(n);
   rep(i, 0, n) pegeon_pos[i] = i;
 
+  vector<int> pegeons_in_nest(n, 1);
+
+  int count = 0;
+
   rep(i, 0, q)
   {
     int type;
@@ -38,25 +42,23 @@ int main()
     {
       int a, b;
       cin >> a >> b;
+      int prev_pegeons_in_nest;
+
+      prev_pegeons_in_nest = pegeons_in_nest[pegeon_pos[a - 1]];
+      pegeons_in_nest[pegeon_pos[a - 1]]--;
+      if (prev_pegeons_in_nest >= 2 && pegeons_in_nest[pegeon_pos[a - 1]] < 2)
+        count--;
+      prev_pegeons_in_nest = pegeons_in_nest[b - 1];
+      pegeons_in_nest[b - 1]++;
+      if (prev_pegeons_in_nest < 2 && pegeons_in_nest[b - 1] >= 2)
+        count++;
+
       pegeon_pos[a - 1] = b - 1;
       break;
     }
 
     case 2:
     {
-      vector<int> pegeons_in_nest(n, 0);
-      rep(i, 0, n)
-      {
-        pegeons_in_nest[pegeon_pos[i]]++;
-      }
-
-      int count = 0;
-      rep(i, 0, n)
-      {
-        if (pegeons_in_nest[i] >= 2)
-          count++;
-      }
-
       // print_vec(int, pegeons_in_nest);
 
       cout << count << endl;
