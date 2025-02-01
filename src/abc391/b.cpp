@@ -42,16 +42,17 @@ int main()
     rep(j, 0, m) t[i][j] = line[j];
   }
 
-  rep(a, 0, n - m + 1) rep(b, 0, n - m + 1) rep(i, 0, m) rep(j, 0, m)
+  rep(a, 0, n - m + 1) rep(b, 0, n - m + 1)
   {
-    if (s[a + i][b + j] != t[i][j])
-      break;
-
-    if (i == m - 1 && j == m - 1)
+    bool ok = true;
+    rep(i, 0, m) rep(j, 0, m)
     {
-      cout << a + 1 << " " << b + 1 << endl;
-      return 0;
+      if (s[a + i][b + j] != t[i][j])
+        ok = false;
     }
+
+    if (ok)
+      cout << a + 1 << " " << b + 1 << endl;
   }
 
   return 0;
